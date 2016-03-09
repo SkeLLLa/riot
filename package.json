@@ -3,7 +3,7 @@
   "version": "2.3.17",
   "description": "A React-like user interface micro-library",
   "homepage": "http://riotjs.com/",
-  "repository": "riot/riot",
+  "repository": "SkeLLLa/riot",
   "author": "Riot maintainers team + smart people from all over the world",
   "contributors": [
     "Richard Bondi https://github.com/rsbondi",
