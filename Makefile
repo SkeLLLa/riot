@@ -6,6 +6,7 @@ MOCHA = ./node_modules/mocha/bin/_mocha
 SMASH = ./node_modules/.bin/smash
 UGLIFY = ./node_modules/uglify-js/bin/uglifyjs
 COVERALLS = ./node_modules/coveralls/bin/coveralls.js
+ZOPFLI = ./node_modules/node-zopfli/bin/zopfli
 
 # folders
 DIST = "dist/riot/"
@@ -44,6 +45,11 @@ compare:
 	du -h riot.min.js riot+compiler.min.js
 	du -h dist/riot/riot.min.js dist/riot/riot+compiler.min.js
 
+copy:
+	# copy dist files into root dir
+	cp dist/riot/*.js ./
+	cp dist/riot/*.js.gz ./
+
 raw:
 	# build riot
 	@ make clean
@@ -61,12 +67,13 @@ min: riot
 	# minify riot
 	@ for f in riot riot+compiler; do \
 		$(UGLIFY) $(DIST)$$f.js \
-			--comments \
 			--mangle \
+			--keep-fnames \
 			--screw-ie8 \
 			--compress  \
 			-o $(DIST)$$f.min.js; \
 		done
+	@ $(ZOPFLI) --gzip -e gz -i 100 $(DIST)*.js
 
 perf: riot
 	# run the performance tests
@@ -79,7 +86,9 @@ watch:
 		node -e $(WATCH) "lib/**/*.js" "make raw" & \
 		export RIOT="./../../../../dist/riot/riot" && ./node_modules/.bin/riot --watch test/tag dist/tags.js)
 
-.PHONY: test min eslint test-mocha test-compiler test-coveralls test-sauce compare raw riot perf watch
+dist: min copy
+
+.PHONY: test min eslint test-mocha test-compiler test-coveralls test-sauce compare raw riot perf copy watch
 
 
 # riot maintainer tasks

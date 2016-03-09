@@ -1,8 +1,8 @@
-/* Riot v2.3.17, @license MIT */
+/* Riot WIP, @license MIT */
 
 ;(function(window, undefined) {
   'use strict';
-var riot = { version: 'v2.3.17', settings: {} },
+var riot = { version: '2.3.17', settings: {} },
   // be aware, internal usage
   // ATTENTION: prefix the global dynamic variables with `__`
 
@@ -1702,12 +1702,12 @@ function Tag(impl, conf, innerHTML) {
  * @param { Tag } tag - tag instance
  */
 function setEventHandler(name, handler, dom, tag) {
-
+  //HACKED: remove compatibility for old browsers
   dom[name] = function(e) {
 
     var ptag = tag._parent,
-      item = tag._item,
-      el
+      item = tag._item/*,
+      el*/
 
     if (!item)
       while (ptag && !item) {
@@ -1719,9 +1719,9 @@ function setEventHandler(name, handler, dom, tag) {
     e = e || window.event
 
     // override the event properties
-    if (isWritable(e, 'currentTarget')) e.currentTarget = dom
-    if (isWritable(e, 'target')) e.target = e.srcElement
-    if (isWritable(e, 'which')) e.which = e.charCode || e.keyCode
+    //if (isWritable(e, 'currentTarget')) e.currentTarget = dom
+    //if (isWritable(e, 'target')) e.target = e.srcElement
+    //if (isWritable(e, 'which')) e.which = e.charCode || e.keyCode
 
     e.item = item
 
@@ -1732,8 +1732,9 @@ function setEventHandler(name, handler, dom, tag) {
     }
 
     if (!e.preventUpdate) {
-      el = item ? getImmediateCustomParentTag(ptag) : tag
-      el.update()
+      //el = item ? getImmediateCustomParentTag(ptag) : tag
+      //el.update()
+      tag.update()
     }
 
   }
