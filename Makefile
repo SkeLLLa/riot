@@ -47,8 +47,7 @@ compare:
 
 copy:
 	# copy dist files into root dir
-	cp dist/riot/*.js ./
-	cp dist/riot/*.js.gz ./
+	cp dist/riot/*.js* ./
 
 raw:
 	# build riot
@@ -87,6 +86,7 @@ watch:
 		export RIOT="./../../../../dist/riot/riot" && ./node_modules/.bin/riot --watch test/tag dist/tags.js)
 
 dist: min copy
+fast: raw copy
 
 .PHONY: test min eslint test-mocha test-compiler test-coveralls test-sauce compare raw riot perf copy watch
 
