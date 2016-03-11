@@ -1104,7 +1104,7 @@ var baf = (function( maxBatchSize, minBatchSize ) {
       avgQueueLength: function(){ return calls.batch/calls.raf }
     }
   }
-})(32, 10);
+})(32);
 
 setTimeout(function(){
   'use strict';
